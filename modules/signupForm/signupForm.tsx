@@ -13,12 +13,15 @@ interface Errors {
 }
 
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/;
+const nameRegex = /^[ a-zA-Z0-9.,'-]+$/;
 
 const getNameError = (name: string) => {
   const nameErrors: string[] = [];
 
   if (!name) nameErrors.push("Name is required");
   if (name.length > 100) nameErrors.push("Maximum 100 characters");
+  if (!name.match(nameRegex))
+    nameErrors.push("Only special characters ' , . or - are allowed");
 
   const firstName = name.split(" ")[0];
   const lastName = name.split(" ").slice(1).join(" ");
