@@ -1,14 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { Container, Main } from "./styles";
+import { useRouter } from "next/router";
 
 interface FormValues {
   name: string;
   email: string;
-}
-
-interface Touched {
-  name: boolean;
-  email: boolean;
 }
 
 interface Errors {
@@ -54,11 +50,9 @@ const getEmailError = (email: string) => {
 
 const Form = () => {
   const [values, setValues] = useState<FormValues>({ name: "", email: "" });
-  const [touched, setTouched] = useState<Touched>({
-    name: false,
-    email: false,
-  });
+  const [touched, setTouched] = useState(false);
   const [errors, setErrors] = useState<Errors>({ name: "", email: "" });
+  const router = useRouter();
 
   const validateName = () => {
     const nameError = getNameError(values.name);
@@ -74,21 +68,67 @@ const Form = () => {
     });
   };
 
+  const handleNameChange = (e: FormEvent<HTMLInputElement>) => {
+    const name = e.currentTarget.value;
+    setValues((prev) => {
+      return { ...prev, name: name };
+    });
+  };
+
+  const handleEmailChange = (e: FormEvent<HTMLInputElement>) => {
+    const email = e.currentTarget.value;
+    setValues((prev) => {
+      return { ...prev, email: email };
+    });
+  };
+
+  useEffect(() => {
+    if (!touched) return;
+
+    validateName();
+    validateEmail();
+  }, [touched, values.name, values.email]);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (errors.name || errors.email) return;
+
+    setTouched(true);
+
+    const { name, email } = values;
+    const nameErrors = getNameError(name);
+    const emailErrors = getEmailError(email);
+    if (nameErrors || emailErrors) return;
+
+    console.log(values);
+    router.push({ pathname: "/result", query: { name, email } });
+  };
+
   return (
     <Container>
       <Main>
         <div className="card">
           <h2 className="header">Title</h2>
           <p>Description</p>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="form-input">
               <label htmlFor="name">Full Name:</label>
-              <input id="name" type="text" />
+              <input
+                id="name"
+                type="text"
+                value={values.name}
+                onChange={handleNameChange}
+              />
               {errors.name && <p>{errors.name}</p>}
             </div>
             <div className="form-input">
               <label htmlFor="email">Email:</label>
-              <input id="email" type="text" />
+              <input
+                id="email"
+                type="text"
+                value={values.email}
+                onChange={handleEmailChange}
+              />
               {errors.email && <p>{errors.email}</p>}
             </div>
             <button type="submit">Submit</button>
