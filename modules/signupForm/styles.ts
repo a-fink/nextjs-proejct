@@ -63,10 +63,6 @@ export const Card = styled.div`
     padding: 1.5rem 1.75rem;
   }
 
-  h2 {
-    font-size: 1.3rem;
-  }
-
   p {
     text-align: left;
     margin: 0;

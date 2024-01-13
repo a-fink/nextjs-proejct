@@ -50,7 +50,7 @@ const SignupConfirmation = () => {
           <ErrorCard>
             <h2>OOPS!</h2>
             <div>
-              {/* credit https://lucide.dev/*/}
+              {/* credit lucide icons https://lucide.dev/ */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="125"
