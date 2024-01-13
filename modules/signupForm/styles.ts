@@ -13,7 +13,7 @@ export const Main = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
 
   h1 {
     margin: 0;

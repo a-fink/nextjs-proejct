@@ -12,7 +12,7 @@ interface Errors {
   email: string;
 }
 
-const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/;
 
 const getNameError = (name: string) => {
   if (!name) {
@@ -47,6 +47,8 @@ const getEmailError = (email: string) => {
 
   return "";
 };
+
+const cleanWhitespace = (str: string) => str.trim().replace(/\s\s+/g, " ");
 
 const SignupForm = () => {
   const [values, setValues] = useState<FormValues>({ name: "", email: "" });
@@ -101,7 +103,10 @@ const SignupForm = () => {
     if (nameErrors || emailErrors) return;
 
     console.log(values);
-    router.push({ pathname: "/result", query: { name, email } });
+    router.push({
+      pathname: "/result",
+      query: { name: cleanWhitespace(name), email: cleanWhitespace(email) },
+    });
   };
 
   return (
@@ -127,7 +132,7 @@ const SignupForm = () => {
               <label htmlFor="email">Email:</label>
               <input
                 id="email"
-                type="text"
+                type="email"
                 value={values.email}
                 onChange={handleEmailChange}
               />
