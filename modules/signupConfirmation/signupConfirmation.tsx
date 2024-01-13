@@ -5,6 +5,8 @@ import {
   Card,
   ConfirmationField,
   ConfirmationContainer,
+  ErrorCard,
+  Button,
 } from "./styles";
 
 const SignupConfirmation = () => {
@@ -33,7 +35,32 @@ const SignupConfirmation = () => {
             </ConfirmationContainer>
           </Card>
         ) : (
-          <div>Error</div>
+          <ErrorCard>
+            <h2>OOPS!</h2>
+            <div>
+              {/* credit https://lucide.dev/*/}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="125"
+                height="125"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#da1a32"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2" />
+                <line x1="12" x2="12" y1="8" y2="12" />
+                <line x1="12" x2="12.01" y1="16" y2="16" />
+              </svg>
+            </div>
+            <p>
+              You have reached this page in error. Please return to the signup
+              page to register for a demo.
+            </p>
+            <Button onClick={() => router.push("/signup")}>Return</Button>
+          </ErrorCard>
         )}
       </Main>
     </Container>

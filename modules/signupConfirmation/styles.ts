@@ -69,22 +69,53 @@ export const ConfirmationField = styled.div`
 `;
 
 export const ErrorCard = styled.div`
-  width: 85%;
-  max-width: 625px;
+  width: 60%;
+  max-width: 400px;
   min-width: 250px;
   padding: 1.5rem 3rem;
   border: 1px solid #eaeaea;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  align-items: center;
+  gap: 1.75rem;
+  text-align: center;
 
   @media (max-width: 500px) {
     padding: 1.5rem 1.75rem;
   }
 
   h2 {
-    border-bottom: 1px solid #eaeaea;
-    font-size: 2rem;
+    font-size: 2.5rem;
+  }
+
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  p {
+    padding: 0 1rem;
+  }
+`;
+
+export const Button = styled.button`
+  width: 50%;
+  padding: 0.75rem 2rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #1a90bf;
+  color: white;
+  font-size: 1rem;
+
+  &:hover,
+  &:focus {
+    background-color: #1d9acc;
+  }
+
+  @media (max-width: 500px) {
+    width: 100%;
   }
 `;
