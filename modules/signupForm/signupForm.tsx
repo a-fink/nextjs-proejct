@@ -89,7 +89,7 @@ const SignupForm = () => {
     if (getNameError(name) || getEmailError(email)) return;
 
     router.push({
-      pathname: "/result",
+      pathname: "/confirmation",
       query: { name: cleanWhitespace(name), email: cleanWhitespace(email) },
     });
   };
