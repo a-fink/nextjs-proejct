@@ -15,37 +15,27 @@ interface Errors {
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/;
 
 const getNameError = (name: string) => {
-  if (!name) {
-    return "Name is required";
-  }
+  const nameErrors: string[] = [];
 
-  if (name.length > 100) {
-    return "Maximum 100 characters";
-  }
+  if (!name) nameErrors.push("Name is required");
+  if (name.length > 100) nameErrors.push("Maximum 100 characters");
 
   const firstName = name.split(" ")[0];
   const lastName = name.split(" ").slice(1).join(" ");
-  if (!firstName || !lastName) {
-    return "Please enter a first and last name";
-  }
+  if (!firstName || !lastName)
+    nameErrors.push("Please enter a first and last name");
 
-  return "";
+  return nameErrors[0] || "";
 };
 
 const getEmailError = (email: string) => {
-  if (!email) {
-    return "Email is required";
-  }
+  const emailErrors: string[] = [];
 
-  if (email.length > 255) {
-    return "Maximum 255 characters";
-  }
+  if (!email) emailErrors.push("Email is required");
+  if (email.length > 255) emailErrors.push("Maximum 255 characters");
+  if (!email.match(emailRegex)) emailErrors.push("Please enter a valid email");
 
-  if (!email.match(emailRegex)) {
-    return "Please enter a valid email";
-  }
-
-  return "";
+  return emailErrors[0] || "";
 };
 
 const cleanWhitespace = (str: string) => str.trim().replace(/\s\s+/g, " ");
@@ -57,30 +47,28 @@ const SignupForm = () => {
   const router = useRouter();
 
   const validateName = () => {
-    const nameError = getNameError(values.name);
     setErrors((prev) => {
-      return { ...prev, name: nameError };
+      return { ...prev, name: getNameError(values.name) };
     });
   };
 
   const validateEmail = () => {
-    const emailError = getEmailError(values.email);
     setErrors((prev) => {
-      return { ...prev, email: emailError };
+      return { ...prev, email: getEmailError(values.email) };
     });
   };
 
   const handleNameChange = (e: FormEvent<HTMLInputElement>) => {
     const name = e.currentTarget.value;
     setValues((prev) => {
-      return { ...prev, name: name };
+      return { ...prev, name };
     });
   };
 
   const handleEmailChange = (e: FormEvent<HTMLInputElement>) => {
     const email = e.currentTarget.value;
     setValues((prev) => {
-      return { ...prev, email: email };
+      return { ...prev, email };
     });
   };
 
@@ -95,14 +83,11 @@ const SignupForm = () => {
     e.preventDefault();
     if (errors.name || errors.email) return;
 
-    setTouched(true);
+    if (!touched) setTouched(true);
 
     const { name, email } = values;
-    const nameErrors = getNameError(name);
-    const emailErrors = getEmailError(email);
-    if (nameErrors || emailErrors) return;
+    if (getNameError(name) || getEmailError(email)) return;
 
-    console.log(values);
     router.push({
       pathname: "/result",
       query: { name: cleanWhitespace(name), email: cleanWhitespace(email) },
@@ -132,7 +117,7 @@ const SignupForm = () => {
               <label htmlFor="email">Email:</label>
               <input
                 id="email"
-                type="email"
+                type="text"
                 value={values.email}
                 onChange={handleEmailChange}
               />
