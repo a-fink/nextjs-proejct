@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from "react";
-import { Container, Main } from "./styles";
+import { Container, Main, Card, Form, FormField, Button } from "./styles";
 import { useRouter } from "next/router";
 
 interface FormValues {
@@ -48,7 +48,7 @@ const getEmailError = (email: string) => {
   return "";
 };
 
-const Form = () => {
+const SignupForm = () => {
   const [values, setValues] = useState<FormValues>({ name: "", email: "" });
   const [touched, setTouched] = useState(false);
   const [errors, setErrors] = useState<Errors>({ name: "", email: "" });
@@ -107,11 +107,13 @@ const Form = () => {
   return (
     <Container>
       <Main>
-        <div className="card">
-          <h2 className="header">Title</h2>
-          <p>Description</p>
-          <form onSubmit={handleSubmit}>
-            <div className="form-input">
+        <h1>
+          Welcome to <a href="https://relevantequityworks.com/">Relevant</a>
+        </h1>
+        <Card>
+          <p>Want to learn more? Fill in the form below to request a demo.</p>
+          <Form onSubmit={handleSubmit}>
+            <FormField $hasError={!!errors.name}>
               <label htmlFor="name">Full Name:</label>
               <input
                 id="name"
@@ -120,8 +122,8 @@ const Form = () => {
                 onChange={handleNameChange}
               />
               {errors.name && <p>{errors.name}</p>}
-            </div>
-            <div className="form-input">
+            </FormField>
+            <FormField $hasError={!!errors.email}>
               <label htmlFor="email">Email:</label>
               <input
                 id="email"
@@ -130,13 +132,13 @@ const Form = () => {
                 onChange={handleEmailChange}
               />
               {errors.email && <p>{errors.email}</p>}
-            </div>
-            <button type="submit">Submit</button>
-          </form>
-        </div>
+            </FormField>
+            <Button type="submit">Submit</Button>
+          </Form>
+        </Card>
       </Main>
     </Container>
   );
 };
 
-export default Form;
+export default SignupForm;
