@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import {
   Container,
   Main,
@@ -11,12 +12,23 @@ import {
 
 const SignupConfirmation = () => {
   const router = useRouter();
-  const { name, email } = router.query;
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const { name, email } = router.query;
+
+    if (name && typeof name === "string") setName(name);
+    if (email && typeof email === "string") setEmail(email);
+
+    setLoading(false);
+  }, [router.query]);
 
   return (
     <Container>
       <Main>
-        {name && email ? (
+        {loading ? null : name && email ? (
           <Card>
             <h2>Interest Confirmed</h2>
             <p>
@@ -56,7 +68,7 @@ const SignupConfirmation = () => {
               </svg>
             </div>
             <p>
-              You have reached this page in error. Please return to the signup
+              You have reached this page in error. Please return to the sign up
               page to register for a demo.
             </p>
             <Button onClick={() => router.push("/signup")}>Return</Button>
