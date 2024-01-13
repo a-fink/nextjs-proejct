@@ -23,8 +23,8 @@ const getNameError = (name: string) => {
   if (!name.match(nameRegex))
     nameErrors.push("Only special characters ' , . or - are allowed");
 
-  const firstName = name.split(" ")[0];
-  const lastName = name.split(" ").slice(1).join(" ");
+  const firstName = name.trim().split(" ")[0];
+  const lastName = name.trim().split(" ").slice(1).join(" ");
   if (!firstName || !lastName)
     nameErrors.push("Please enter a first and last name");
 
