@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from "react";
-import { Container, Main, Card, Form, FormField, Button } from "./styles";
+import { Main, Card, Form, FormField, Button } from "./styles";
 import { useRouter } from "next/router";
 
 interface FormValues {
@@ -98,39 +98,37 @@ const SignupForm = () => {
   };
 
   return (
-    <Container>
-      <Main>
-        <h1>
-          Welcome to <a href="https://relevantequityworks.com/">Relevant</a>
-        </h1>
-        <Card>
-          <p>Want to learn more? Fill in the form below to request a demo.</p>
-          <Form onSubmit={handleSubmit}>
-            <FormField $hasError={!!errors.name}>
-              <label htmlFor="name">Full Name:</label>
-              <input
-                id="name"
-                type="text"
-                value={values.name}
-                onChange={handleNameChange}
-              />
-              {errors.name && <p>{errors.name}</p>}
-            </FormField>
-            <FormField $hasError={!!errors.email}>
-              <label htmlFor="email">Email:</label>
-              <input
-                id="email"
-                type="text"
-                value={values.email}
-                onChange={handleEmailChange}
-              />
-              {errors.email && <p>{errors.email}</p>}
-            </FormField>
-            <Button type="submit">Submit</Button>
-          </Form>
-        </Card>
-      </Main>
-    </Container>
+    <Main>
+      <h1>
+        Welcome to <a href="https://relevantequityworks.com/">Relevant</a>
+      </h1>
+      <Card>
+        <p>Want to learn more? Fill in the form below to request a demo.</p>
+        <Form onSubmit={handleSubmit}>
+          <FormField $hasError={!!errors.name}>
+            <label htmlFor="name">Full Name:</label>
+            <input
+              id="name"
+              type="text"
+              value={values.name}
+              onChange={handleNameChange}
+            />
+            {errors.name && <p>{errors.name}</p>}
+          </FormField>
+          <FormField $hasError={!!errors.email}>
+            <label htmlFor="email">Email:</label>
+            <input
+              id="email"
+              type="text"
+              value={values.email}
+              onChange={handleEmailChange}
+            />
+            {errors.email && <p>{errors.email}</p>}
+          </FormField>
+          <Button type="submit">Submit</Button>
+        </Form>
+      </Card>
+    </Main>
   );
 };
 
