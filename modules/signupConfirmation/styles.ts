@@ -1,9 +1,5 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  adding: 0 2rem;
-`;
-
 export const Main = styled.main`
   min-height: 100vh;
   width: 100%;
